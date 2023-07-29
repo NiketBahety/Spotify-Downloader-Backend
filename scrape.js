@@ -17,7 +17,7 @@ const scrape = async (url) => {
   });
   const page = await browser.newPage();
 
-  await page.goto(url);
+  await page.goto(url, { waitUntil: "networkidle2" });
   let data = await page.evaluate(() => {
     return document
       .getElementsByTagName("ytd-video-renderer")[0]
