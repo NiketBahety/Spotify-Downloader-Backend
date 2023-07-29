@@ -26,7 +26,6 @@ const scrape = async (url) => {
       );
   });
 
-  await browser.close();
   return "https://www.youtube.com" + data;
 };
 
