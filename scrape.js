@@ -12,6 +12,8 @@ const scrape = async (url) => {
         "href"
       );
   });
+
+  await browser.close();
   return "https://www.youtube.com" + data;
 };
 
