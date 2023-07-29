@@ -89,30 +89,30 @@ app.get("/", function (req, res) {
 
             try {
               await Promise.all(promiseArray);
+
+              const outputFile = `${folderName}.zip`;
+              const zipData = zip.toBuffer();
+              zip.writeZip(__dirname + "/" + outputFile);
+              res.set("Content-Type", "application/octet-stream");
+              res.set(
+                "Content-Disposition",
+                `attachment; filename=${outputFile}`
+              );
+              res.set("Content-Length", zipData.length);
+              res.send(zipData);
+
+              fs.unlink(__dirname + "/" + outputFile, (err) => {
+                if (err) throw err;
+                console.log("Zip file deleted successfully");
+              });
+
+              fs.rmSync(__dirname + "/" + folderName, {
+                recursive: true,
+                force: true,
+              });
             } catch (err) {
               console.log(err);
             }
-
-            const outputFile = `${folderName}.zip`;
-            const zipData = zip.toBuffer();
-            zip.writeZip(__dirname + "/" + outputFile);
-            res.set("Content-Type", "application/octet-stream");
-            res.set(
-              "Content-Disposition",
-              `attachment; filename=${outputFile}`
-            );
-            res.set("Content-Length", zipData.length);
-            res.send(zipData);
-
-            fs.unlink(__dirname + "/" + outputFile, (err) => {
-              if (err) throw err;
-              console.log("Zip file deleted successfully");
-            });
-
-            fs.rmSync(__dirname + "/" + folderName, {
-              recursive: true,
-              force: true,
-            });
           }
         }
       );
