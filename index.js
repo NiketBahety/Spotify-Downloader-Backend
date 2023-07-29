@@ -19,6 +19,7 @@ const app = express();
 app.use(cors());
 
 app.get("/", function (req, res) {
+  console.log("Request recieved!");
   spotifyApi.clientCredentialsGrant().then(
     async function (data) {
       // Save the access token so that it's used in future calls
@@ -28,6 +29,7 @@ app.get("/", function (req, res) {
 
       let tracks = await getPlaylistTracks(spotifyApi, req.query.id);
       const folderName = req.query.id;
+      console.log("Folder name: " + folderName);
       fs.mkdir(
         __dirname + `/${folderName}`,
         { recursive: true },
