@@ -18,6 +18,8 @@ var spotifyApi = new SpotifyWebApi({
 const app = express();
 app.use(cors());
 
+const PORT = process.env.PORT || 8888;
+
 app.get("/", function (req, res) {
   console.log("Request recieved!");
   spotifyApi.clientCredentialsGrant().then(
@@ -125,4 +127,4 @@ app.get("/", function (req, res) {
   );
 });
 
-app.listen(8000, () => console.log("HTTP Server up and running."));
+app.listen(PORT, () => console.log("HTTP Server up and running."));
