@@ -1,10 +1,10 @@
 const puppeteer = require("puppeteer");
 
 const scrape = async (url) => {
-  const browser = await puppeteer.launch({ headless: "new" });
+  const browser = await puppeteer.launch({ headless: "false" });
   const page = await browser.newPage();
 
-  await page.goto(url);
+  await page.goto(url, { waitUntil: "load" });
   let data = await page.evaluate(() => {
     return document
       .getElementsByTagName("ytd-video-renderer")[0]
